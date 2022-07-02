@@ -1,0 +1,7 @@
+syntax = "proto3"
+
+message Customer {
+    int _id = 0;
+    string customer = 1;
+    Date create_time = 2;
+}

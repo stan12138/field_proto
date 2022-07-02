@@ -1,0 +1,211 @@
+syntax = "proto3"
+
+message Product {
+    int64 _id = 1; // product唯一id
+    string product_pattern = 2; // 图案
+    string string_id = 3; // 字符串形式product id
+    string product_description = 4; // 产品描述
+    string position = 5; // 部位
+    string product_brand = 6; // 品牌
+    string product_series = 7; // 系列
+    string product_customer = 8; // 客户
+    string quarter = 9; // 季度
+    string development_type_id = 10; // 开发款号
+    string printing_accessory_id = 11; // 辅料款号
+    string product_type_id = 12; // 生产款号
+    map<string, Sample> sample = 13; // 样品, key的结构是: x+y，例如:1+1, 代表x选版次y
+    Product product = 14; // 大货
+
+    Date create_time = 15; // 创建日期
+    Date update_time = 16; // 更新时间
+    
+    int stage = 17;  // 数字形式的阶段信息，样品 1～3， 大货 -1
+    int version = 18; // 数字形式版本信息，样品 1~N,  大货 -1
+    string current_stage = 19; // 阶段。一选，二选，三选，大货
+    string current_version = 20; // 版次，版次1～版次n，大货
+    bool has_sample = 21; // 是否有样品
+    bool has_product = 22; //是否有大货
+
+    string type = 23; // 产品类型，printing / accessory
+
+    string source = 24;   // 来源，目前
+    int origin_id = 25;   // 来源产品的_id
+
+    string product_approval_result = 26; // 大货送批结果
+    string product_development_status = 27; // 大货开发状态
+    string product_quotation_status = 28; // 大货报价状态
+    string product_test_result = 29;   // 大货水洗结果
+    string product_test_status = 30; // 大货水洗状态
+
+    string sample_approval_result = 31; // 样品送批结果
+    string sample_development_status = 32; // 样品开发状态
+    string sample_quotation_status = 33; // 样品报价状态
+    string sample_test_result = 34;   // 样品水洗结果
+    string sample_test_status = 35; // 样品水洗状态
+
+    string approval_result = 36; // 产品送批结果
+    string development_status = 37; // 产品开发状态
+    string quotation_status = 38; // 产品报价状态
+    string test_result = 39;   // 产品水洗结果
+    string test_status = 40; // 产品水洗状态
+
+    string product_status = 41; // 产品状态：开发打样，加入大货，淘汰，取消
+    string old_product_status = 42;  // 旧的产品状态，每次状态变化用于记录上一个状态，以便于在淘汰还原，取消还原的时候充值
+
+}
+
+message Sample {
+    string order_receive_date = 1;  // 接单日期
+    string customer_information = 2; // 客户信息
+    string process_type = 3; // 工艺类别
+    string print_tech = 4; // 印花工艺
+    string process_detail = 5; // 工艺评审
+    string process_template = 6; // 工艺评审模版
+    string num = 7; // 数量
+    repeated SampleProtoLine prototype_require = 8; // 打样需求
+    string risk_assessment = 9; // 风险评估
+    string cloth_name = 10; // 面料名称, 印花样品的直接来自表单，辅料样品的来自cloth_info中每一项用/拼接
+    string cloth_receive_date = 11; // 面料来期, 只有印花样品有
+    string approval_date = 12; // 送批时间
+    string approval_remark = 13; // 送批备注
+    string approval_result = 14; // 送批结果
+    string approval_failed_reason = 15; // 批版不通过原因
+    string cutting_receive_date = 16; // 裁片来期
+    string cutting_remark = 17; // 来片备注
+    string cutting_submit_date = 18; // 送片日期
+    string cutting_submit_remark = 19; // 送片备注
+    string cutting_submit_result = 20; // 送片结果
+    string submit_failed_reason = 21; // 送片不通过原因
+    string total_remark = 22; // 样品备注
+
+    // 烫压参数，只有辅料样品有
+    string iron_temperture = 23;  // 烫压温度
+    string iron_length = 24; // 烫压时间
+    string iron_pressure = 25;  // 烫压压力
+    string iron_remark = 26;   // 烫压注意事项
+
+    // 面料信息，只有辅料样品有
+    repeated ClothInfoItem cloth_info = 27;
+
+    int stage = 28; // 阶段
+    int version = 29;  // 版次
+
+    // 计算出来的额外属性
+    string total_pattern_color = 30; // 套色，打样需求中套色必然只有一个
+    string specification = 31; // 规格，打样需求中各个规格用/拼接出的字符串
+
+    // 状态信息
+    string development_status = 32; // 开发状态
+    string qc_status = 33; // 质量管理状态
+    string quotation_status = 34; // 报价状态
+    string test_result = 35; // 最新一次水洗结果
+    string test_status = 36;  // 最新一次水洗状态
+    string todo_sheet_print_status = 37; // 起办单打印状态
+    string tech_process_sheet_print_status = 38; // 工艺流程单打印状态
+
+    int wash_id = 30; // 已经获取水洗结果的情况下，就会在这里设置对应的水洗单的id，便于跳转
+
+
+}
+
+// 每个样品阶段的打样需求，套色只有一种，规格只有一种，规格备注只有一种
+// 其余都会有多种
+message SampleProtoLine {
+    string total_pattern_color = 1; // 套色
+    string specification = 2; // 规格
+    string specification_remark = 3; //规格备注
+    string pattern_color = 4; //配色
+    string cloth_color = 5;  //面料颜色
+    string sample_quantity = 6;   //打样数量
+    repeated bool ele_show = 7; // 元素是否显示，长度为6，对应以上次序的元素
+    repeated bool button_show = 8; // 按钮是否展示，长度为3， 对应 +规格， +花号色组，+面料颜色
+}
+
+message ClothInfoItem {
+    string cloth_name = 1; // 面料名称
+    string cloth_receive_date = 2; // 面料来期
+    string cloth_remark = 3;  // 面料备注
+    int index = 4; // 序号
+}
+
+message Product {
+    string order_receive_date = 1;  // 接单日期
+    string customer_information = 2; // 客户信息
+    string process_type = 3; // 工艺类别
+    string print_tech = 4; // 印花工艺
+    string process_detail = 5; // 工艺评审
+    string process_template = 6; // 工艺评审模版
+    ProductProtoType prototype_require = 7; // 打样需求
+    string risk_assessment = 8; // 风险评估
+    string cloth_name = 9; // 面料名称
+    string cloth_receive_date = 10; // 面料来期
+    bool positioning_board_status = 11; // 定位纸板
+    bool process_sheet_status = 12; // 工艺单状态
+
+    string approval_date = 13; // 送批时间
+    string approval_remark = 14; // 送批备注
+    string approval_result = 15; // 送批结果
+    string approval_failed_reason = 16; // 批版不通过原因
+    string cutting_receive_date = 17; // 裁片来期
+    string cutting_remark = 18; // 来片备注
+    string cutting_submit_date = 19; // 送片日期
+    string cutting_submit_remark = 20; // 送片备注
+    string cutting_submit_result = 21; // 送片结果
+    string submit_failed_reason = 22; // 送片不通过原因
+
+    string external_test_date = 23; // 外检测日期
+    string external_test_result = 24; // 外检测结果
+    string external_test_remark = 25; // 外检测不通过原因
+
+    string unit = 26; // 单位
+    string recv_approval_date = 27; // 收批时间
+    string recv_approval_remark = 28; // 收批备注
+    string total_remark = 29;  // 大货备注
+
+    // 计算出来的额外属性
+    string total_pattern_color = 30; // 套色，打样需求中套色必然只有一个
+    string specification = 31; // 规格，打样需求中各个规格用/拼接出的字符串
+    string cloth_color = 32; // 面料颜色，打样需求中各个面料颜色用/拼接出的字符串
+    int total_num = 33; // 打样需求中，所有单布数量的总和(sum cloth_quantity)
+    repeated NumTableItem num_table = 34; // 数量表，提取打样需求中的每一行的信息构建的结构，便于使用，行数和打样需求一致
+    map<string, int> prototype_require_num_info = 35; // 打样需求中每个不同规格的所有打样数量的总和，<规格：打样数量总和>
+    map<string, int> fz_num_info = 36; // 打样需求中每个不同规格对应的单布数量的总和，<规格：单数数量总和>
+
+    // 状态属性
+    string development_status = 37; // 开发状态
+    string qc_status = 38; // 质量管理状态
+    string quotation_status = 39; // 报价状态
+    string test_result = 40; // 最新一次水洗结果
+    string test_status = 41;  // 最新一次水洗状态
+    string todo_sheet_print_status = 42; // 起办单打印状态
+    string tech_process_sheet_print_status = 43; // 工艺流程单打印状态
+
+}
+
+message ProductProtoType {
+    repeated ProductProtoLine sample_request = 1; // 打样信息
+    repeated string size_name = 2; // 尺寸名称
+}
+
+// 每个大货阶段的打样需求，套色只有一种，规格只有一种，规格备注只有一种
+// 其余都会有多种
+message ProductProtoLine {
+    string total_pattern_color = 1;    //套色
+    string specification = 2;   // 规格
+    string specification_remark = 3;   // 规格备注
+    string pattern_color = 4; // 配色
+    string cloth_color = 5;  // 面料颜色
+    string sample_quantity = 6;   // 打样数量
+    string cloth_quantity = 7;   // 合计 / 单布数量
+    repeated int size_info = 8;   // 各尺寸数据
+    repeated bool ele_show = 9;  // 元素是否展示，长度为7，对应1-7
+    repeated bool button_show = 10; // 按钮是否展示，长度3， 对应 +规格， +花号色组，+面料颜色
+}
+
+message NumTableItem {
+    string total_pattern_color = 1; // 当前行打样需求的套色
+    string specification = 2; // 当前行的规格
+    string pattern_color = 3; // 当前行的 配色
+    string cloth_color = 4;   // 当前行的 面料颜色
+    int cloth_quantity = 5;   // 当前行的单布数量
+}

@@ -1,0 +1,12 @@
+syntax = "proto3"
+
+message User {
+    int _id = 0;   // 用户id
+    string user_status = 1;  // 用户状态：冻结/正常
+    string user_name = 2; //用户名
+    string login_name = 3; //账号
+    string user_password = 4;  // 密码，自动生成的，无法填写
+    string company = 5;  // 公司
+    string departure = 6; // 部门
+    string role = 7;  // 角色：超级管理员，管理员，业务员，跟单员，水洗人员，开发人员，产前文员
+} 

@@ -1,0 +1,6 @@
+syntax = "proto3"
+
+message Counter {
+    string _id = 0;  // 计数器对象名称：product， development， tech_process，customer，brand，qc， quotation，tech，user， wash
+    int next_id = 1; // 计数对象的下一个id
+}

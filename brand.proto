@@ -1,0 +1,13 @@
+syntax = "proto3"
+
+message Brand {
+    int _id = 0;   // 品牌id
+    string brand = 1;   // 品牌名称
+    repeated SeriesInfoItem series_info = 2;  // 系列与客户信息
+    Date create_time = 3;   // 创建时间
+}
+
+message SeriesInfoItem {   // 形如[儿童，[安踏， 耐克]]
+    string series = 1; // SeriesInfoItem实际是个数组，index 0是系列名称
+    repeated string customer = 2;  // index 1是这个系列的客户列表
+}

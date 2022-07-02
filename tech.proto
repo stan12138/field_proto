@@ -1,0 +1,14 @@
+syntax = "proto3"
+
+message Tech {
+    int _id = 0;
+    string process_category =1;
+    repeated string development_department = 2;
+    repeated string tech_template = 3;
+    repeated TechStepItem tech_step = 4;
+}
+
+message TechStepItem { // 长度为2的数组
+    string step_type = 1; // 步骤类型
+    string step_name = 2; // 步骤名称
+}

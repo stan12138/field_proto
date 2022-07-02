@@ -1,0 +1,46 @@
+syntax = "proto3"
+
+message Quotation {
+    int _id = 0;
+    Date create_time = 1;
+    string quotation_status = 2;
+    int num = 3;  //新增的一个字段，用来作为报价管理表格里面的数量，字段来源：对于大货，是total_num，对于样品，接下来会在样品编辑页面中新增一个数量字段相对应
+    repeated QuotationItem quotation = 4;
+
+    string type = 10;    // 对应产品的类型， printing / accessory
+    bool is_sample = 11;   // 对应是否是样品
+    int product_id = 12;   // 对应的产品id
+
+    string cloth_color = 13;  // 面料颜色 这里是水洗的产品的面料颜色，而不是被水洗的面料颜色
+    string cloth_name = 14;  //面料名称 这里是水洗的产品的面料名字，而不是被水洗的面料名字
+    string product_pattern = 15;  //产品图案
+    string owner = 16;  // 跟单员
+    string product_brand = 17;   // 品牌
+    string product_customer = 18; // 客户
+    string product_series = 19;    // 系列
+    string quarter = 20;  // 季度
+    string position = 21;  // 部位
+    string development_type_id = 22;  // 开发款号
+    string printing_accessory_id = 23;   // 辅料款号
+    string product_type_id = 24;   // 生产款号
+    string customer_information = 25;   // 客户信息
+    string print_tech = 26;   // 印花工艺
+    string process_type = 27; // 工艺类别
+    string total_pattern_color = 28;   // 套色
+    string specification = 29;  // 规格
+    map<string, int> prototype_require_num_info = 30; // 打样需求数量信息
+
+    int stage = 31;    // N选
+    int version = 32;    // 版次
+}
+
+message QuotationItem {
+    string remark = 1;
+    string category = 2;
+    string dev_price = 3;
+    string brand_price = 4;
+    string final_price = 5;
+    string company_price = 6;
+    string factory_price = 7;
+    strign customer_price = 8;
+}

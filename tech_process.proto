@@ -1,0 +1,41 @@
+syntax = "proto3"
+
+message TechProcess {
+    int _id = 0;
+    Date create_time = 1;
+    string print_time = 2;
+    string status = 3;
+    repeated string tech_step = 4;  // 步骤的列表
+    repeated ProcessSheetItem process_sheet = 5; // 每个步骤的表单，与tech_step一一对应
+
+    string type = 10;    // 对应产品的类型， printing / accessory
+    bool is_sample = 11;   // 对应是否是样品
+    int product_id = 12;   // 对应的产品id
+
+    string cloth_color = 13;  // 面料颜色 这里是水洗的产品的面料颜色，而不是被水洗的面料颜色
+    string cloth_name = 14;  //面料名称 这里是水洗的产品的面料名字，而不是被水洗的面料名字
+    string product_pattern = 15;  //产品图案
+    string owner = 16;  // 跟单员
+    string product_brand = 17;   // 品牌
+    string product_customer = 18; // 客户
+    string product_series = 19;    // 系列
+    string quarter = 20;  // 季度
+    string position = 21;  // 部位
+    string development_type_id = 22;  // 开发款号
+    string printing_accessory_id = 23;   // 辅料款号
+    string product_type_id = 24;   // 生产款号
+    string customer_information = 25;   // 客户信息
+    string print_tech = 26;   // 印花工艺
+    string process_type = 27; // 工艺类别
+    string total_pattern_color = 28;   // 套色
+    string specification = 29;  // 规格
+    map<string, int> prototype_require_num_info = 30; // 打样需求数量信息
+
+    int stage = 31;    // N选
+    int version = 32;    // 版次
+}
+
+message ProcessSheetItem {
+    // 每种不同的步骤，各有各自的表单，结构各不相同
+    // 太复杂了，这里不想写了，请看common_set.tech_process_form
+}

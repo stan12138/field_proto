@@ -1,0 +1,59 @@
+syntax = "proto3"
+
+message Wash {
+    int _id = 0; // 水洗id
+    Date create_time = 1; // 创建时间
+    Date test_finish_time = 2;  // 
+    Date recv_time = 3; 
+    Date lost_time = 4; 
+    repeated WashInfoItem wash_info = 5;   // 水洗信息
+    repeated WashResItem wash_res = 6;  // 水洗报告
+    string wash_summary = 7;   // 水洗总结
+    string test_status = 8;   // 水洗状态
+    string test_result = 9; // 水洗结果
+
+    string type = 10;    // 对应产品的类型， printing / accessory
+    bool is_sample = 11;   // 对应是否是样品
+    int product_id = 12;   // 对应的产品id
+
+    string cloth_color = 13;  // 面料颜色 这里是水洗的产品的面料颜色，而不是被水洗的面料颜色
+    string cloth_name = 14;  //面料名称 这里是水洗的产品的面料名字，而不是被水洗的面料名字
+    string product_pattern = 15;  //产品图案
+    string owner = 16;  // 跟单员
+    string product_brand = 17;   // 品牌
+    string product_customer = 18; // 客户
+    string product_series = 19;    // 系列
+    string quarter = 20;  // 季度
+    string position = 21;  // 部位
+    string development_type_id = 22;  // 开发款号
+    string printing_accessory_id = 23;   // 辅料款号
+    string product_type_id = 24;   // 生产款号
+    string customer_information = 25;   // 客户信息
+    string print_tech = 26;   // 印花工艺
+    string process_type = 27; // 工艺类别
+    string total_pattern_color = 28;   // 套色
+    string specification = 29;  // 规格
+    map<string, int> prototype_require_num_info = 30; // 打样需求数量信息
+
+    int stage = 31;    // N选
+    int version = 32;    // 版次
+}
+
+message WashInfoItem {
+    string num = 1;     // 水洗数量
+    string cloth_name = 2;   // 面料名称
+    string cloth_color = 3;  // 面料颜色
+}
+
+message WashResItem {
+    bool no = 1;   // 不合格
+    bool yes = 2;  // 合格
+    string cloth_name = 3;   // 面料名称
+    string cloth_color = 4;   // 面料颜色
+    string test_item = 5;   // 水洗项目
+    string test_res = 6;   // 水洗结果
+    string num = 7;    // 水洗数量
+    string advice = 8;    // 水洗建议
+    string remark = 9;  // 水洗备注
+    string analysis = 10;   // 水洗分析
+}
